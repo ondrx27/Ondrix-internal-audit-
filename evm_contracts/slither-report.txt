@@ -1,0 +1,164 @@
+'solc --version' running
+'solc @openzeppelin/=node_modules/@openzeppelin/ @chainlink/=node_modules/@chainlink/ contracts/OndrixEscrow.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes --base-path . --include-path node_modules --allow-paths .,/home/runner/work/Ondrixprivat/Ondrixprivat/ondrix-escrow-evm/node_modules --via-ir --optimize --optimize-runs 200' running
+INFO:Detectors:
+OndrixEscrow.getInvestorLockStatus(address) (contracts/OndrixEscrow.sol#520-547) uses a dangerous strict equality:
+	- isUnlocked = block.timestamp >= unlockTime || investor.status == InvestorStatus.BnbWithdrawn (contracts/OndrixEscrow.sol#538)
+OndrixEscrow.nextUnlockTime(address) (contracts/OndrixEscrow.sol#510-515) uses a dangerous strict equality:
+	- investor.status == InvestorStatus.BnbWithdrawn (contracts/OndrixEscrow.sol#513)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+INFO:Detectors:
+OndrixEscrow.getChainlinkPrice() (contracts/OndrixEscrow.sol#362-373) ignores return value by (None,answer,None,updatedAt,None) = globalEscrow.priceFeed.latestRoundData() (contracts/OndrixEscrow.sol#363)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+INFO:Detectors:
+OndrixEscrow.initializeEscrow(address,address,uint256,uint256,uint256,address,uint256,uint256,uint256) (contracts/OndrixEscrow.sol#162-213) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _saleEndTimestamp <= block.timestamp (contracts/OndrixEscrow.sol#178)
+OndrixEscrow.depositBnb() (contracts/OndrixEscrow.sol#222-283) uses timestamp for comparisons
+	Dangerous comparisons:
+	- tokensToReceive > tokensRemaining (contracts/OndrixEscrow.sol#241)
+OndrixEscrow.withdrawLockedBnb(address) (contracts/OndrixEscrow.sol#310-339) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp < globalEscrow.initializationTimestamp + globalEscrow.lockDuration (contracts/OndrixEscrow.sol#319)
+OndrixEscrow.closeSale() (contracts/OndrixEscrow.sol#345-357) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp < globalEscrow.saleEndTimestamp (contracts/OndrixEscrow.sol#348)
+OndrixEscrow.getChainlinkPrice() (contracts/OndrixEscrow.sol#362-373) uses timestamp for comparisons
+	Dangerous comparisons:
+	- answer <= 0 (contracts/OndrixEscrow.sol#365)
+	- block.timestamp - updatedAt > globalEscrow.priceStalenessThreshold (contracts/OndrixEscrow.sol#368)
+OndrixEscrow.calculateTokensForBnb(uint256,uint256) (contracts/OndrixEscrow.sol#378-405) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(bnbAmount <= type()(uint256).max / bnbUsdPrice,Overflow protection) (contracts/OndrixEscrow.sol#388)
+	- require(bool,string)(tokenAmount > 0,Amount too small for precision) (contracts/OndrixEscrow.sol#402)
+OndrixEscrow.isUnlockTime(address) (contracts/OndrixEscrow.sol#410-414) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp >= globalEscrow.initializationTimestamp + globalEscrow.lockDuration (contracts/OndrixEscrow.sol#413)
+OndrixEscrow.nextUnlockTime(address) (contracts/OndrixEscrow.sol#510-515) uses timestamp for comparisons
+	Dangerous comparisons:
+	- investor.status == InvestorStatus.BnbWithdrawn (contracts/OndrixEscrow.sol#513)
+OndrixEscrow.getInvestorLockStatus(address) (contracts/OndrixEscrow.sol#520-547) uses timestamp for comparisons
+	Dangerous comparisons:
+	- isUnlocked = block.timestamp >= unlockTime || investor.status == InvestorStatus.BnbWithdrawn (contracts/OndrixEscrow.sol#538)
+OndrixEscrow.emergencyWithdraw() (contracts/OndrixEscrow.sol#570-586) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(block.timestamp > globalEscrow.saleEndTimestamp + 2592000,Emergency period not reached) (contracts/OndrixEscrow.sol#571)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+INFO:Detectors:
+SafeERC20._callOptionalReturn(IERC20,bytes) (node_modules/@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol#173-191) uses assembly
+	- INLINE ASM (node_modules/@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol#176-186)
+SafeERC20._callOptionalReturnBool(IERC20,bytes) (node_modules/@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol#201-211) uses assembly
+	- INLINE ASM (node_modules/@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol#205-209)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+INFO:Detectors:
+4 different versions of Solidity are used:
+	- Version constraint ^0.8.20 is used by:
+		-^0.8.20 (contracts/OndrixEscrow.sol#2)
+		-^0.8.20 (node_modules/@openzeppelin/contracts/access/Ownable.sol#4)
+		-^0.8.20 (node_modules/@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol#4)
+		-^0.8.20 (node_modules/@openzeppelin/contracts/utils/Context.sol#4)
+		-^0.8.20 (node_modules/@openzeppelin/contracts/utils/Pausable.sol#4)
+		-^0.8.20 (node_modules/@openzeppelin/contracts/utils/ReentrancyGuard.sol#4)
+	- Version constraint ^0.8.0 is used by:
+		-^0.8.0 (node_modules/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol#2)
+	- Version constraint >=0.6.2 is used by:
+		->=0.6.2 (node_modules/@openzeppelin/contracts/interfaces/IERC1363.sol#4)
+	- Version constraint >=0.4.16 is used by:
+		->=0.4.16 (node_modules/@openzeppelin/contracts/interfaces/IERC165.sol#4)
+		->=0.4.16 (node_modules/@openzeppelin/contracts/interfaces/IERC20.sol#4)
+		->=0.4.16 (node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol#4)
+		->=0.4.16 (node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol#4)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used
+INFO:Detectors:
+Context._contextSuffixLength() (node_modules/@openzeppelin/contracts/utils/Context.sol#25-27) is never used and should be removed
+Context._msgData() (node_modules/@openzeppelin/contracts/utils/Context.sol#21-23) is never used and should be removed
+ReentrancyGuard._reentrancyGuardEntered() (node_modules/@openzeppelin/contracts/utils/ReentrancyGuard.sol#84-86) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+INFO:Detectors:
+Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- VerbatimInvalidDeduplication
+	- FullInlinerNonExpressionSplitArgumentEvaluationOrder
+	- MissingSideEffectsOnSelectorAccess.
+It is used by:
+	- ^0.8.20 (contracts/OndrixEscrow.sol#2)
+	- ^0.8.20 (node_modules/@openzeppelin/contracts/access/Ownable.sol#4)
+	- ^0.8.20 (node_modules/@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol#4)
+	- ^0.8.20 (node_modules/@openzeppelin/contracts/utils/Context.sol#4)
+	- ^0.8.20 (node_modules/@openzeppelin/contracts/utils/Pausable.sol#4)
+	- ^0.8.20 (node_modules/@openzeppelin/contracts/utils/ReentrancyGuard.sol#4)
+Version constraint ^0.8.0 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- FullInlinerNonExpressionSplitArgumentEvaluationOrder
+	- MissingSideEffectsOnSelectorAccess
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- DataLocationChangeInInternalOverride
+	- NestedCalldataArrayAbiReencodingSizeValidation
+	- SignedImmutables
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching.
+It is used by:
+	- ^0.8.0 (node_modules/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol#2)
+Version constraint >=0.6.2 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- MissingSideEffectsOnSelectorAccess
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- NestedCalldataArrayAbiReencodingSizeValidation
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- MissingEscapingInFormatting
+	- ArraySliceDynamicallyEncodedBaseType
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow.
+It is used by:
+	- >=0.6.2 (node_modules/@openzeppelin/contracts/interfaces/IERC1363.sol#4)
+Version constraint >=0.4.16 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- >=0.4.16 (node_modules/@openzeppelin/contracts/interfaces/IERC165.sol#4)
+	- >=0.4.16 (node_modules/@openzeppelin/contracts/interfaces/IERC20.sol#4)
+	- >=0.4.16 (node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol#4)
+	- >=0.4.16 (node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol#4)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+INFO:Detectors:
+Low level call in OndrixEscrow.withdrawPendingBnb() (contracts/OndrixEscrow.sol#288-301):
+	- (success,None) = address(msg.sender).call{value: amount}() (contracts/OndrixEscrow.sol#297)
+Low level call in OndrixEscrow.emergencyWithdraw() (contracts/OndrixEscrow.sol#570-586):
+	- (success,None) = address(owner()).call{value: bnbBalance}() (contracts/OndrixEscrow.sol#583)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+INFO:Detectors:
+Parameter OndrixEscrow.initializeEscrow(address,address,uint256,uint256,uint256,address,uint256,uint256,uint256)._tokenContract (contracts/OndrixEscrow.sol#163) is not in mixedCase
+Parameter OndrixEscrow.initializeEscrow(address,address,uint256,uint256,uint256,address,uint256,uint256,uint256)._recipientWallet (contracts/OndrixEscrow.sol#164) is not in mixedCase
+Parameter OndrixEscrow.initializeEscrow(address,address,uint256,uint256,uint256,address,uint256,uint256,uint256)._tokenAmount (contracts/OndrixEscrow.sol#165) is not in mixedCase
+Parameter OndrixEscrow.initializeEscrow(address,address,uint256,uint256,uint256,address,uint256,uint256,uint256)._lockDuration (contracts/OndrixEscrow.sol#166) is not in mixedCase
+Parameter OndrixEscrow.initializeEscrow(address,address,uint256,uint256,uint256,address,uint256,uint256,uint256)._saleEndTimestamp (contracts/OndrixEscrow.sol#167) is not in mixedCase
+Parameter OndrixEscrow.initializeEscrow(address,address,uint256,uint256,uint256,address,uint256,uint256,uint256)._priceFeed (contracts/OndrixEscrow.sol#168) is not in mixedCase
+Parameter OndrixEscrow.initializeEscrow(address,address,uint256,uint256,uint256,address,uint256,uint256,uint256)._minBnbInvestment (contracts/OndrixEscrow.sol#169) is not in mixedCase
+Parameter OndrixEscrow.initializeEscrow(address,address,uint256,uint256,uint256,address,uint256,uint256,uint256)._maxBnbInvestment (contracts/OndrixEscrow.sol#170) is not in mixedCase
+Parameter OndrixEscrow.initializeEscrow(address,address,uint256,uint256,uint256,address,uint256,uint256,uint256)._priceStalenessThreshold (contracts/OndrixEscrow.sol#171) is not in mixedCase
+Parameter OndrixEscrow.withdrawLockedBnb(address)._investor (contracts/OndrixEscrow.sol#310) is not in mixedCase
+Parameter OndrixEscrow.isUnlockTime(address)._investor (contracts/OndrixEscrow.sol#410) is not in mixedCase
+Parameter OndrixEscrow.getLockedBnbAmount(address)._investor (contracts/OndrixEscrow.sol#419) is not in mixedCase
+Parameter OndrixEscrow.getPendingWithdrawal(address)._address (contracts/OndrixEscrow.sol#426) is not in mixedCase
+Parameter OndrixEscrow.getInvestorInfo(address)._investor (contracts/OndrixEscrow.sol#461) is not in mixedCase
+Parameter OndrixEscrow.nextUnlockTime(address)._investor (contracts/OndrixEscrow.sol#510) is not in mixedCase
+Parameter OndrixEscrow.getInvestorLockStatus(address)._investor (contracts/OndrixEscrow.sol#520) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+INFO:Slither:contracts analyzed (10 contracts with 100 detectors), 41 result(s) found

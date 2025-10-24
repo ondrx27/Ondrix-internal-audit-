@@ -1,0 +1,18 @@
+mythril.interfaces.cli [ERROR]: Solc experienced a fatal error.
+
+ParserError: Source "@openzeppelin/contracts/token/ERC20/ERC20.sol" not found: File not found. Searched the following locations: "".
+ --> contracts/TestToken.sol:4:1:
+  |
+4 | import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+mythril.interfaces.cli [ERROR]: Solc experienced a fatal error.
+
+ParserError: Source "@openzeppelin/contracts/token/ERC20/IERC20.sol" not found: File not found. Searched the following locations: "".
+ --> contracts/TokenVesting.sol:4:1:
+  |
+4 | import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
